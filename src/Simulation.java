@@ -37,6 +37,7 @@ public class Simulation {
             }
             currentGrid = nextGrid;
             nextGrid = new Grid(currentGrid.numberOfRows(), currentGrid.numberOfColumns());
+            //sleep for a second so the output can be seen easily
             Thread.sleep(1000);
         }
     }
