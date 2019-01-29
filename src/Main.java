@@ -1,8 +1,8 @@
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        Grid grid = new Grid(9,10);
-        grid.print();
+    public static void main(String[] args)  throws InterruptedException{
+        Simulation simulation = new Simulation(10, 10);
+        simulation.start();
     }
 }

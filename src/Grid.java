@@ -5,6 +5,7 @@ import java.util.Random;
  */
 public class Grid {
     private Cell[][] grid;
+    private int numRows, numColumns;
     private Random random  = new Random();
 
     /**
@@ -14,11 +15,17 @@ public class Grid {
      */
     Grid(int rows, int columns){
         grid = new Cell[rows][columns];
+        numRows = rows;
+        numColumns = columns;
         for (int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[i].length; j++){
-                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
+//                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
+                grid[i][j] = Cell.Dead;
             }
         }
+        grid[5][5] = Cell.Alive;
+        grid[5][4] = Cell.Alive;
+        grid[5][6] = Cell.Alive;
     }
 
     /**
@@ -27,11 +34,11 @@ public class Grid {
      * @param column    The row number of the Cell being checked, indexing starts at 0
      * @return The number of alive neighbours
      */
-    private int numberOfAliveNeighbours(int row, int column){
+    public int numberOfAliveNeighbours(int row, int column){
         int numberAliveNeighbours = 0;
 
-        //add the value of each sorrounding neighbour. Not done in a loop as
-        // it looks cleaner due to the need to manage edge cases
+        //add the value of each sorrounding neighbour
+        //TODO: convert to loop
         if(row != 0)
             numberAliveNeighbours += grid[row - 1][column    ].ordinal();
         if(row != grid.length - 1)
@@ -53,6 +60,26 @@ public class Grid {
     }
 
     /**
+     * Sets a cell at a give row and column to a given Cell state
+     * @param row       The row number of the cell being set
+     * @param column    The column number of the cell being set
+     * @param cell      The state that the cell is being set to (Alive or Dead)
+     */
+    public void setCell(int row, int column, Cell cell){
+        grid[row][column] = cell;
+    }
+
+    /**
+     * Checks if a given cell is alive
+     * @param row       The row number of the cell being checked
+     * @param column    The column number of the cell being checked
+     * @return          A boolean representing whether or not the cell is alive
+     */
+    public boolean isCellAlive(int row, int column){
+        return grid[row][column] == Cell.Alive;
+    }
+
+    /**
      * Prints the grid object in a readable format
      */
     public void print(){
@@ -62,9 +89,14 @@ public class Grid {
             }
             System.out.println("");
         }
+        System.out.println("\n\n" + numberOfAliveNeighbours(5,4));
     }
 
-    public Cell[][] getCells(){
-        return grid;
+    public int numberOfRows(){
+        return numRows;
+    }
+
+    public int numberOfColumns(){
+        return numColumns;
     }
 }
