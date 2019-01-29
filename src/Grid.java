@@ -19,8 +19,7 @@ public class Grid {
         numColumns = columns;
         for (int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[i].length; j++){
-//                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
-                grid[i][j] = Cell.Dead;
+                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
             }
         }
         grid[5][5] = Cell.Alive;
