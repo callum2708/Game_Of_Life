@@ -19,7 +19,8 @@ public class Grid {
         numColumns = columns;
         for (int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[i].length; j++){
-                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
+//                grid[i][j] = (random.nextInt(2) == 0) ? Cell.Dead : Cell.Alive;
+                grid[i][j] = Cell.Dead;
             }
         }
         grid[5][5] = Cell.Alive;
@@ -38,24 +39,40 @@ public class Grid {
 
         //add the value of each sorrounding neighbour
         //TODO: convert to loop
-        if(row != 0)
-            numberAliveNeighbours += grid[row - 1][column    ].ordinal();
-        if(row != grid.length - 1)
-            numberAliveNeighbours += grid[row + 1][column    ].ordinal();
-        if(column != 0)
-            numberAliveNeighbours += grid[row    ][column - 1].ordinal();
-        if(column != grid[0].length - 1)
-            numberAliveNeighbours += grid[row    ][column + 1].ordinal();
-        if(row != 0 &&  column != 0)
-            numberAliveNeighbours += grid[row - 1][column - 1].ordinal();
-        if(row != grid.length - 1 &&  column != grid[0].length - 1)
-            numberAliveNeighbours += grid[row + 1][column + 1].ordinal();
-        if(row != 0 &&  column != grid[0].length - 1)
-            numberAliveNeighbours += grid[row - 1][column + 1].ordinal();
-        if(row != grid.length - 1 &&  column != 0)
-            numberAliveNeighbours += grid[row + 1][column - 1].ordinal();
+//        if(row != 0)
+//            numberAliveNeighbours += grid[row - 1][column    ].ordinal();
+//        if(row != grid.length - 1)
+//            numberAliveNeighbours += grid[row + 1][column    ].ordinal();
+//        if(column != 0)
+//            numberAliveNeighbours += grid[row    ][column - 1].ordinal();
+//        if(column != grid[0].length - 1)
+//            numberAliveNeighbours += grid[row    ][column + 1].ordinal();
+//        if(row != 0 &&  column != 0)
+//            numberAliveNeighbours += grid[row - 1][column - 1].ordinal();
+//        if(row != grid.length - 1 &&  column != grid[0].length - 1)
+//            numberAliveNeighbours += grid[row + 1][column + 1].ordinal();
+//        if(row != 0 &&  column != grid[0].length - 1)
+//            numberAliveNeighbours += grid[row - 1][column + 1].ordinal();
+//        if(row != grid.length - 1 &&  column != 0)
+//            numberAliveNeighbours += grid[row + 1][column - 1].ordinal();
+
+        for(int row_ = row - 1; row_ < 2; row_++){
+            for(int column_ = column - 1; column_ < 2; column_++) {
+                if(!cellIsCentral(row_, column_, row, column) && !cellIsOutsideBorders(row_, column_)) {
+                    numberAliveNeighbours += grid[row][column].ordinal();
+                }
+            }
+        }
 
         return numberAliveNeighbours;
+    }
+
+    private boolean cellIsOutsideBorders(int row, int column) {
+        return row < 0 || row > numberOfRows() || column  < 0 || column > numberOfColumns();
+    }
+
+    private boolean cellIsCentral(int row, int column, int centerRow, int centerColumn) {
+        return row == centerRow && column == centerColumn;
     }
 
     /**
